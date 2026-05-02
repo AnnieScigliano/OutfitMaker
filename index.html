@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Outfit Maker — A retro outfit picker inspired by Cher's wardrobe computer from Clueless (1995). Mix and match your wardrobe!" />
+  <title>Outfit Maker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="crt-overlay"></div>
+
+  <div id="app-window">
+    <!-- Title Bar -->
+    <div id="title-bar">
+      <span id="wardrobe-name">CHER'S WARDROBE</span>
+      <span id="season-tag">▌ FALL FASHIONS ▐</span>
+      <div id="window-controls">
+        <button id="btn-add" class="header-icon" title="Add Item">＋</button>
+        <button id="btn-history" class="header-icon" title="Outfit History">▤</button>
+        <button id="btn-new-outfit" class="header-icon" title="New Outfit">↻</button>
+      </div>
+    </div>
+
+    <!-- Wardrobe Screen -->
+    <div id="wardrobe-screen">
+
+      <!-- STEP 1: Pick Top + Bottom (no silhouette) -->
+      <div id="step-1" class="step active">
+
+        <div class="filter-bar-mini">
+          <select id="filter-season-1" class="retro-select">
+            <option value="">ALL SEASONS</option>
+            <option value="Spring">SPRING</option>
+            <option value="Summer">SUMMER</option>
+            <option value="Fall">FALL</option>
+            <option value="Winter">WINTER</option>
+          </select>
+          <select id="filter-occasion-1" class="retro-select">
+            <option value="">ALL OCCASIONS</option>
+            <option value="Uni">UNI</option>
+            <option value="Work">WORK</option>
+            <option value="Party">PARTY</option>
+          </select>
+        </div>
+
+        <div class="picker-stack">
+          <!-- Top Panel -->
+          <div class="item-panel carousel-section" id="carousel-tops">
+            <div class="panel-img-wrap">
+              <div class="carousel-item-display">
+                <img src="" alt="Selected top" class="carousel-img" />
+                <div class="carousel-empty">No tops yet — add some!</div>
+              </div>
+            </div>
+            <div class="panel-controls">
+              <button class="carousel-arrow" data-dir="prev" aria-label="Previous top">◀◀</button>
+              <span class="carousel-counter"><span class="current">0</span>/<span class="total">0</span></span>
+              <button class="carousel-arrow" data-dir="next" aria-label="Next top">▶▶</button>
+            </div>
+          </div>
+
+          <!-- Bottom Panel -->
+          <div class="item-panel carousel-section" id="carousel-bottoms">
+            <div class="panel-img-wrap">
+              <div class="carousel-item-display">
+                <img src="" alt="Selected bottom" class="carousel-img" />
+                <div class="carousel-empty">No bottoms yet — add some!</div>
+              </div>
+            </div>
+            <div class="panel-controls">
+              <button class="carousel-arrow" data-dir="prev" aria-label="Previous bottom">◀◀</button>
+              <span class="carousel-counter"><span class="current">0</span>/<span class="total">0</span></span>
+              <button class="carousel-arrow" data-dir="next" aria-label="Next bottom">▶▶</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mismatch banner -->
+        <div id="mismatch-warning-1" class="mismatch-warning hidden">
+          <div class="mismatch-banner">MIS-MATCH<span class="mismatch-bang">!</span></div>
+        </div>
+
+      </div>
+
+      <!-- STEP 2: Complete the Look (silhouette appears here) -->
+      <div id="step-2" class="step">
+
+        <div class="step2-layout">
+          <!-- Left side: shoes + coats -->
+          <div class="step2-side">
+            <div class="carousel-section mini" id="carousel-shoes">
+              <span class="carousel-label">SHOES</span>
+              <div class="carousel-container">
+                <button class="carousel-arrow left" data-dir="prev" aria-label="Previous shoes">◀</button>
+                <div class="carousel-viewport">
+                  <div class="carousel-item-display">
+                    <img src="" alt="Selected shoes" class="carousel-img" />
+                    <div class="carousel-empty">— None —</div>
+                  </div>
+                </div>
+                <button class="carousel-arrow right" data-dir="next" aria-label="Next shoes">▶</button>
+              </div>
+              <div class="carousel-counter"><span class="current">0</span>/<span class="total">0</span></div>
+            </div>
+
+            <div class="carousel-section mini" id="carousel-coats">
+              <span class="carousel-label">COATS</span>
+              <div class="carousel-container">
+                <button class="carousel-arrow left" data-dir="prev" aria-label="Previous coat">◀</button>
+                <div class="carousel-viewport">
+                  <div class="carousel-item-display">
+                    <img src="" alt="Selected coat" class="carousel-img" />
+                    <div class="carousel-empty">— None —</div>
+                  </div>
+                </div>
+                <button class="carousel-arrow right" data-dir="next" aria-label="Next coat">▶</button>
+              </div>
+              <div class="carousel-counter"><span class="current">0</span>/<span class="total">0</span></div>
+            </div>
+          </div>
+
+          <!-- Center: silhouette with locked outfit -->
+          <div id="silhouette-container-2">
+            <img src="/assets/silhouette.png" alt="Outfit silhouette" id="silhouette-base-2" />
+            <div id="silhouette2-overlay-top" class="silhouette-overlay"></div>
+            <div id="silhouette2-overlay-bottom" class="silhouette-overlay"></div>
+            <div id="silhouette2-overlay-shoes" class="silhouette-overlay"></div>
+            <div id="silhouette2-overlay-coat" class="silhouette-overlay"></div>
+            <div id="silhouette2-overlay-accessory" class="silhouette-overlay"></div>
+            <div id="silhouette2-overlay-purse" class="silhouette-overlay"></div>
+            <div id="locked-badge" class="hidden">▌ LOCKED ▐</div>
+          </div>
+
+          <!-- Right side: accessories + purses -->
+          <div class="step2-side">
+            <div class="carousel-section mini" id="carousel-accessories">
+              <span class="carousel-label">ACCESSORIES</span>
+              <div class="carousel-container">
+                <button class="carousel-arrow left" data-dir="prev" aria-label="Previous accessory">◀</button>
+                <div class="carousel-viewport">
+                  <div class="carousel-item-display">
+                    <img src="" alt="Selected accessory" class="carousel-img" />
+                    <div class="carousel-empty">— None —</div>
+                  </div>
+                </div>
+                <button class="carousel-arrow right" data-dir="next" aria-label="Next accessory">▶</button>
+              </div>
+              <div class="carousel-counter"><span class="current">0</span>/<span class="total">0</span></div>
+            </div>
+
+            <div class="carousel-section mini" id="carousel-purses">
+              <span class="carousel-label">PURSES</span>
+              <div class="carousel-container">
+                <button class="carousel-arrow left" data-dir="prev" aria-label="Previous purse">◀</button>
+                <div class="carousel-viewport">
+                  <div class="carousel-item-display">
+                    <img src="" alt="Selected purse" class="carousel-img" />
+                    <div class="carousel-empty">— None —</div>
+                  </div>
+                </div>
+                <button class="carousel-arrow right" data-dir="next" aria-label="Next purse">▶</button>
+              </div>
+              <div class="carousel-counter"><span class="current">0</span>/<span class="total">0</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="mismatch-warning-2" class="mismatch-warning hidden">
+          <div class="mismatch-banner">MIS-MATCH<span class="mismatch-bang">!</span></div>
+        </div>
+
+      </div>
+
+      <!-- Closet View -->
+      <div id="closet-view" class="hidden">
+        <div class="step-header">
+          <h1 class="step-title">MY CLOSET</h1>
+          <button id="btn-close-closet" class="retro-btn secondary small">✕ CLOSE</button>
+        </div>
+        <div class="closet-filters">
+          <label class="filter-label">Type:
+            <select id="closet-filter-type" class="retro-select">
+              <option value="">All</option>
+              <option value="Shirts">Shirts</option>
+              <option value="Pants/Skirts">Pants/Skirts</option>
+              <option value="Dresses">Dresses</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Coats (Fall/Spring)">Coats (F/S)</option>
+              <option value="Coats (Winter)">Coats (Winter)</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Purses/Backpacks">Purses/Backpacks</option>
+            </select>
+          </label>
+        </div>
+        <div id="closet-grid"></div>
+      </div>
+
+      <!-- Outfit History View -->
+      <div id="history-view" class="hidden">
+        <div class="step-header">
+          <h1 class="step-title">OUTFIT HISTORY</h1>
+          <button id="btn-close-history" class="retro-btn secondary small">✕ CLOSE</button>
+        </div>
+        <div id="history-grid"></div>
+        <div id="history-empty" class="hidden">No outfits saved yet! Go make some looks ✨</div>
+      </div>
+
+      <!-- DRESS ME Celebration -->
+      <div id="celebration-overlay" class="hidden">
+        <div id="confetti-container"></div>
+        <div id="celebration-card">
+          <h2 class="celebration-title">▌ LOOK COMPLETE! ▐</h2>
+          <div id="outfit-summary"></div>
+          <div class="celebration-actions">
+            <button id="btn-save-outfit" class="retro-btn primary">SAVE OUTFIT</button>
+            <button id="btn-new-after-save" class="retro-btn secondary">NEW LOOK</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Action Bar (BROWSE | step nav | DRESS ME) -->
+    <div id="action-bar">
+      <button id="btn-browse" class="action-btn browse-btn">BROWSE</button>
+      <div id="action-center">
+        <button id="btn-prev-step" class="step-btn hidden">◀ BACK</button>
+        <span id="step-indicator">STEP <span id="step-num">1</span> / 2</span>
+        <button id="btn-next-step" class="step-btn">NEXT ▶</button>
+      </div>
+      <button id="btn-dress-me" class="action-btn dress-me-btn" disabled>DRESS<br/>ME</button>
+    </div>
+
+    <!-- Category Ribbon -->
+    <div id="category-ribbon">
+      <span class="cat-link" data-type="Shirts">SHIRTS</span>
+      <span class="cat-sep">·</span>
+      <span class="cat-link" data-type="Dresses">DRESSES</span>
+      <span class="cat-sep">·</span>
+      <span class="cat-link" data-type="Pants/Skirts">PANTS</span>
+      <span class="cat-sep">·</span>
+      <span class="cat-link" data-type="Shoes">SHOES</span>
+      <span class="cat-sep">·</span>
+      <span class="cat-link" data-type="Coats (Fall/Spring)">COATS</span>
+      <span class="cat-sep">·</span>
+      <span class="cat-link" data-type="Accessories">JEWELRY</span>
+      <span class="cat-sep">·</span>
+      <span class="cat-link" data-type="Purses/Backpacks">PURSES</span>
+      <span class="cat-sep">·</span>
+      <span class="cat-link more">MORE</span>
+    </div>
+
+    <!-- Status Bar -->
+    <div id="status-bar">
+      <span id="status-items">Items: 0</span>
+      <span class="status-sep">│</span>
+      <span id="status-outfits">Outfits: 0</span>
+      <span class="status-sep">│</span>
+      <span id="status-version">Outfit Maker v1.0</span>
+    </div>
+  </div>
+
+  <!-- Upload Modal -->
+  <div id="upload-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>＋ ADD TO CLOSET</h2>
+        <button id="btn-close-modal" class="retro-btn secondary small">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="upload-dropzone">
+          <div class="dropzone-content">
+            <span class="dropzone-icon">📸</span>
+            <p>Drop an image here or click to browse</p>
+            <input type="file" id="file-input" accept="image/*" />
+          </div>
+          <img id="upload-preview" class="hidden" alt="Preview" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select id="upload-type" class="retro-select" required>
+            <option value="">Select type...</option>
+            <option value="Shirts">Shirts</option>
+            <option value="Pants/Skirts">Pants/Skirts</option>
+            <option value="Dresses">Dresses</option>
+            <option value="Shoes">Shoes</option>
+            <option value="Coats (Fall/Spring)">Coats (Fall/Spring)</option>
+            <option value="Coats (Winter)">Coats (Winter)</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Purses/Backpacks">Purses/Backpacks</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Season(s)</label>
+          <div class="checkbox-group" id="upload-seasons">
+            <label class="retro-checkbox"><input type="checkbox" value="Spring" /> Spring</label>
+            <label class="retro-checkbox"><input type="checkbox" value="Summer" /> Summer</label>
+            <label class="retro-checkbox"><input type="checkbox" value="Fall" /> Fall</label>
+            <label class="retro-checkbox"><input type="checkbox" value="Winter" /> Winter</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Occasion(s)</label>
+          <div class="checkbox-group" id="upload-occasions">
+            <label class="retro-checkbox"><input type="checkbox" value="Uni" /> Uni</label>
+            <label class="retro-checkbox"><input type="checkbox" value="Work" /> Work</label>
+            <label class="retro-checkbox"><input type="checkbox" value="Party" /> Party</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Color</label>
+          <div class="color-input-group">
+            <div class="color-presets" id="color-presets">
+              <button class="color-swatch" data-color="#FF6B6B" style="background:#FF6B6B" title="Red"></button>
+              <button class="color-swatch" data-color="#FF69B4" style="background:#FF69B4" title="Pink"></button>
+              <button class="color-swatch" data-color="#FFD93D" style="background:#FFD93D" title="Yellow"></button>
+              <button class="color-swatch" data-color="#FF8C42" style="background:#FF8C42" title="Orange"></button>
+              <button class="color-swatch" data-color="#6BCB77" style="background:#6BCB77" title="Green"></button>
+              <button class="color-swatch" data-color="#4D96FF" style="background:#4D96FF" title="Blue"></button>
+              <button class="color-swatch" data-color="#9B59B6" style="background:#9B59B6" title="Purple"></button>
+              <button class="color-swatch" data-color="#FFFFFF" style="background:#FFFFFF" title="White"></button>
+              <button class="color-swatch" data-color="#2C3E50" style="background:#2C3E50" title="Navy"></button>
+              <button class="color-swatch" data-color="#1A1A1A" style="background:#1A1A1A" title="Black"></button>
+              <button class="color-swatch" data-color="#D4A574" style="background:#D4A574" title="Beige"></button>
+              <button class="color-swatch" data-color="#8B4513" style="background:#8B4513" title="Brown"></button>
+            </div>
+            <div class="color-custom">
+              <input type="color" id="upload-color-picker" value="#FF69B4" />
+              <span class="color-hex" id="color-hex-display">#FF69B4</span>
+            </div>
+          </div>
+          <input type="hidden" id="upload-color" value="" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Name (optional)</label>
+          <input type="text" id="upload-name" class="retro-input" placeholder="e.g. Blue striped shirt" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-save-item" class="retro-btn primary">💾 Save to Closet</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
