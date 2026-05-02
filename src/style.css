@@ -127,14 +127,14 @@ body {
   color: white;
 }
 
-/* --- Wardrobe Screen (leopard print canvas) --- */
+/* --- Wardrobe Screen (beige plaid wallpaper) --- */
 #wardrobe-screen {
   position: relative;
   min-height: 540px;
   padding: 22px 28px;
-  background-color: var(--leopard-tan);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%23d6a373'/><g fill='%234a2511'><path d='M28 36 q-13 -2 -11 13 q3 13 15 11 q12 -2 11 -15 q-2 -11 -15 -9z'/><path d='M88 22 q-10 -1 -9 11 q2 10 12 9 q10 -1 9 -11 q-1 -9 -12 -9z'/><path d='M148 48 q-13 -2 -11 13 q3 12 15 11 q12 -2 11 -14 q-1 -11 -15 -10z'/><path d='M168 112 q-10 -1 -9 10 q1 10 11 10 q10 0 10 -10 q0 -10 -12 -10z'/><path d='M52 96 q-10 -1 -10 11 q1 11 12 10 q11 -1 11 -11 q-1 -11 -13 -10z'/><path d='M112 132 q-12 -1 -11 12 q2 12 14 11 q12 -1 11 -13 q-2 -11 -14 -10z'/><path d='M30 158 q-10 -1 -10 10 q2 9 12 9 q10 0 10 -10 q-1 -9 -12 -9z'/><path d='M94 172 q-10 -1 -9 10 q1 10 11 9 q10 -1 9 -10 q-1 -10 -11 -9z'/><path d='M166 168 q-10 -1 -10 10 q1 9 11 9 q10 0 10 -10 q0 -9 -11 -9z'/></g><g fill='%23a55a2a'><ellipse cx='28' cy='40' rx='5' ry='3.5'/><ellipse cx='88' cy='25' rx='4' ry='3'/><ellipse cx='148' cy='52' rx='5' ry='3.5'/><ellipse cx='168' cy='115' rx='4' ry='3'/><ellipse cx='52' cy='99' rx='4' ry='3'/><ellipse cx='112' cy='135' rx='4.5' ry='3.5'/><ellipse cx='30' cy='162' rx='4' ry='3'/><ellipse cx='94' cy='176' rx='4' ry='3'/><ellipse cx='166' cy='172' rx='4' ry='3'/></g></svg>");
-  background-size: 180px 180px;
+  background-color: #c9bfa3;
+  background-image: url("/assets/plaid-bg.jpg");
+  background-size: 220px 220px;
   background-repeat: repeat;
   overflow: hidden;
 }

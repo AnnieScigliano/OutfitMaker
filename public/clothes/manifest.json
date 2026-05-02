@@ -1,0 +1,22 @@
+[
+  { "file": "borcegos.jpeg", "name": "Black Combat Boots", "type": "Shoes", "color": "#1A1A1A", "seasons": ["Fall", "Winter"], "occasions": ["Uni", "Party"] },
+  { "file": "botas.jpeg", "name": "Patchwork Platform Boots", "type": "Shoes", "color": "#6e8a3a", "seasons": ["Fall", "Winter"], "occasions": ["Uni", "Party"] },
+  { "file": "chaleco.jpeg", "name": "Sage Knit Vest", "type": "Shirts", "color": "#8aa56a", "seasons": ["Fall", "Spring"], "occasions": ["Uni", "Work"] },
+  { "file": "choker.jpeg", "name": "Burgundy Velvet Choker", "type": "Accessories", "color": "#7a1f2a", "seasons": ["Spring", "Summer", "Fall", "Winter"], "occasions": ["Party", "Uni"] },
+  { "file": "converseclass.jpeg", "name": "Black Converse Hi-Tops", "type": "Shoes", "color": "#1A1A1A", "seasons": ["Spring", "Summer", "Fall"], "occasions": ["Uni"] },
+  { "file": "converserojas.jpeg", "name": "Burgundy Converse Hi-Tops", "type": "Shoes", "color": "#6e1f2e", "seasons": ["Spring", "Fall", "Winter"], "occasions": ["Uni"] },
+  { "file": "corderoi.jpeg", "name": "Navy Corduroy Pants", "type": "Pants/Skirts", "color": "#1f2a4a", "seasons": ["Fall", "Winter"], "occasions": ["Uni", "Work"] },
+  { "file": "gatito.jpeg", "name": "Cat & Duck Tee", "type": "Shirts", "color": "#2a2a2a", "seasons": ["Spring", "Summer", "Fall"], "occasions": ["Uni"] },
+  { "file": "gorromanzana.jpeg", "name": "Apple Knit Beanie", "type": "Accessories", "color": "#c3303a", "seasons": ["Fall", "Winter"], "occasions": ["Uni", "Party"] },
+  { "file": "maryjanes.jpeg", "name": "Platform Mary Janes", "type": "Shoes", "color": "#1A1A1A", "seasons": ["Spring", "Fall", "Winter"], "occasions": ["Work", "Party", "Uni"] },
+  { "file": "musculosapeces.jpeg", "name": "Fish Print Tank", "type": "Shirts", "color": "#ede1c8", "seasons": ["Spring", "Summer"], "occasions": ["Uni", "Party"] },
+  { "file": "musculosareme.jpeg", "name": "Gray Bow Top", "type": "Shirts", "color": "#8a8a8a", "seasons": ["Spring", "Summer", "Fall"], "occasions": ["Uni", "Party"] },
+  { "file": "pantaloncuadrille.jpeg", "name": "Red Gingham Pants", "type": "Pants/Skirts", "color": "#c33038", "seasons": ["Spring", "Summer"], "occasions": ["Uni", "Party"] },
+  { "file": "pbeige.jpeg", "name": "Beige Wide-Leg Pants", "type": "Pants/Skirts", "color": "#b08758", "seasons": ["Spring", "Fall"], "occasions": ["Work", "Uni"] },
+  { "file": "pmarron.jpeg", "name": "Brown Stitched Pants", "type": "Pants/Skirts", "color": "#4a2e1a", "seasons": ["Fall", "Winter"], "occasions": ["Work", "Uni"] },
+  { "file": "rememanzana.jpeg", "name": "Navy Apple Tee", "type": "Shirts", "color": "#1f2a4a", "seasons": ["Spring", "Fall"], "occasions": ["Uni"] },
+  { "file": "remeracorbata.jpeg", "name": "Brown Vest with Tie", "type": "Shirts", "color": "#3a2515", "seasons": ["Fall", "Winter"], "occasions": ["Work", "Party"] },
+  { "file": "remerahilo.jpeg", "name": "Daisy Knit Polo", "type": "Shirts", "color": "#8aa56a", "seasons": ["Spring", "Summer"], "occasions": ["Uni", "Work"] },
+  { "file": "shortbordo.jpeg", "name": "Burgundy Corduroy Shorts", "type": "Pants/Skirts", "color": "#6e2a25", "seasons": ["Spring", "Summer", "Fall"], "occasions": ["Uni", "Party"] },
+  { "file": "sweaterespiral.jpeg", "name": "Spiral Sweater", "type": "Shirts", "color": "#1A1A1A", "seasons": ["Fall", "Winter"], "occasions": ["Uni", "Party"] }
+]

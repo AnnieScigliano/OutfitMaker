@@ -22,9 +22,9 @@ const state = {
 };
 
 // --- Init ---
-document.addEventListener('DOMContentLoaded', () => {
-  initStarterWardrobe();
+document.addEventListener('DOMContentLoaded', async () => {
   bindEvents();
+  await initStarterWardrobe();
   refreshCarousels();
   updateStatusBar();
   updateSeasonTag();
@@ -40,11 +40,11 @@ function bindEvents() {
 
   // Action bar
   document.getElementById('btn-browse').addEventListener('click', () => showView('closet'));
-  document.getElementById('btn-next-step').addEventListener('click', () => showStep(2));
+  document.getElementById('btn-next-step').addEventListener('click', tryAdvanceToStep2);
   document.getElementById('btn-prev-step').addEventListener('click', () => showStep(1));
   document.getElementById('btn-dress-me').addEventListener('click', () => {
-    if (state.currentStep === 1) showStep(2);
-    else dressMe();
+    if (state.currentStep === 1) tryAdvanceToStep2();
+    else tryDressMe();
   });
 
   // Category ribbon — open closet filtered by clicked type
@@ -148,7 +148,7 @@ function showStep(step) {
     document.getElementById('locked-badge').classList.remove('hidden');
     refreshStep2Carousels();
   }
-  checkAndShowMismatch();
+  hideMismatchBanners();
 }
 
 function updateSeasonTag() {
@@ -203,7 +203,7 @@ function refreshCarousels() {
   updateCarouselDisplay('bottoms', 'carousel-bottoms');
   updateSelections();
   handleDressMode();
-  checkAndShowMismatch();
+  hideMismatchBanners();
 }
 
 function refreshStep2Carousels() {
@@ -225,7 +225,7 @@ function refreshStep2Carousels() {
   updateCarouselDisplay('accessories', 'carousel-accessories');
   updateCarouselDisplay('purses', 'carousel-purses');
   updateSelections();
-  checkAndShowMismatch();
+  hideMismatchBanners();
 }
 
 function navigateCarousel(key, dir) {
@@ -252,7 +252,7 @@ function navigateCarousel(key, dir) {
   updateCarouselDisplay(key, sectionId);
   updateSelections();
   handleDressMode();
-  checkAndShowMismatch();
+  hideMismatchBanners();
 
   if (state.currentStep === 2) updateStep2Silhouette();
 }
@@ -332,23 +332,44 @@ function handleDressMode() {
 }
 
 // --- Mismatch ---
-function checkAndShowMismatch() {
+// The banner only appears when the user tries to advance (NEXT / DRESS ME).
+// Any carousel change clears it so it never blocks browsing.
+function currentStepMismatch() {
   const items = state.currentStep === 1
     ? [state.selected.top, state.selected.bottom]
     : [state.selected.top, state.selected.bottom, state.selected.shoes, state.selected.coat, state.selected.accessory, state.selected.purse];
+  return checkMismatch(items);
+}
 
-  const { hasMismatch, reason } = checkMismatch(items);
-  const warningEl = document.getElementById(`mismatch-warning-${state.currentStep}`);
-  if (!warningEl) return;
+function showMismatchBanner(step, reason) {
+  const el = document.getElementById(`mismatch-warning-${step}`);
+  if (!el) return;
+  el.classList.remove('hidden');
+  const banner = el.querySelector('.mismatch-banner');
+  if (banner) banner.title = reason || '';
+}
 
+function hideMismatchBanners() {
+  document.getElementById('mismatch-warning-1')?.classList.add('hidden');
+  document.getElementById('mismatch-warning-2')?.classList.add('hidden');
+}
+
+function tryAdvanceToStep2() {
+  const { hasMismatch, reason } = currentStepMismatch();
   if (hasMismatch) {
-    warningEl.classList.remove('hidden');
-    const textEl = warningEl.querySelector('.mismatch-text');
-    textEl.textContent = 'MIS-MATCH';
-    textEl.title = reason || '';
-  } else {
-    warningEl.classList.add('hidden');
+    showMismatchBanner(1, reason);
+    return;
   }
+  showStep(2);
+}
+
+function tryDressMe() {
+  const { hasMismatch, reason } = currentStepMismatch();
+  if (hasMismatch) {
+    showMismatchBanner(2, reason);
+    return;
+  }
+  dressMe();
 }
 
 // --- Upload Modal ---
