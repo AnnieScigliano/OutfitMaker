@@ -11,6 +11,7 @@
   --leopard-rust:   #a55a2a;
   --screen-cream:   #ede1cc;
   --screen-cream-2: #f5ebd6;
+  --panel-bg:       #fffaf0;
   --frame-navy:     #1a1a3e;
   --frame-navy-2:   #2a2a5e;
   --frame-light:    #b6b6e0;
@@ -182,7 +183,7 @@ body {
 
 .item-panel {
   width: 100%;
-  background: var(--screen-cream);
+  background: var(--panel-bg);
   border: 3px solid var(--frame-navy);
   border-radius: 4px;
   padding: 14px 14px 8px;
@@ -276,7 +277,7 @@ body {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   gap: 16px;
-  align-items: start;
+  align-items: center;
 }
 .step2-side {
   display: flex; flex-direction: column;
@@ -284,7 +285,7 @@ body {
 }
 
 .carousel-section.mini {
-  background: var(--screen-cream);
+  background: var(--panel-bg);
   border: 2px solid var(--frame-navy);
   border-radius: 4px;
   padding: 8px;
@@ -346,8 +347,8 @@ body {
 /* --- Silhouette (step 2 only) --- */
 #silhouette-container-2 {
   position: relative;
-  width: 220px; height: 400px;
-  background: var(--screen-cream);
+  width: 220px; height: 360px;
+  background: var(--panel-bg);
   border: 3px solid var(--frame-navy);
   border-radius: 4px;
   padding: 10px;
@@ -475,8 +476,29 @@ body {
 }
 .dress-me-btn {
   background: linear-gradient(180deg, var(--btn-pink-hi) 0%, var(--btn-pink) 50%, var(--btn-pink-lo) 100%);
-  font-size: 11px;
-  padding: 10px 16px;
+  font-size: 14px;
+  padding: 14px 22px;
+  border-radius: 8px;
+  letter-spacing: 2.5px;
+}
+.dress-me-btn:not(:disabled) {
+  animation: dressMeGlow 2.4s ease-in-out infinite;
+}
+@keyframes dressMeGlow {
+  0%, 100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.4),
+      inset 0 -3px 0 rgba(0,0,0,0.35),
+      0 3px 0 rgba(0,0,0,0.5),
+      0 0 0 rgba(232,100,154,0);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.4),
+      inset 0 -3px 0 rgba(0,0,0,0.35),
+      0 3px 0 rgba(0,0,0,0.5),
+      0 0 22px rgba(232,100,154,0.55);
+  }
 }
 .action-btn:hover:not(:disabled) { filter: brightness(1.1); }
 .action-btn:active:not(:disabled) {
@@ -849,6 +871,79 @@ body {
 }
 @keyframes confettiFall {
   to { top: 110%; opacity: 0; transform: rotate(720deg); }
+}
+
+/* ============================================
+   Boot Choreography (one-shot on page load)
+   ============================================ */
+@keyframes bootFlicker {
+  0%   { opacity: 0; }
+  6%   { opacity: 0.35; }
+  10%  { opacity: 0; }
+  16%  { opacity: 0.7; }
+  22%  { opacity: 0.15; }
+  100% { opacity: 1; }
+}
+@keyframes bootSlideDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bootSlideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bootFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes bootScreenFlash {
+  0%   { opacity: 0; filter: brightness(2.5) blur(3px); }
+  35%  { opacity: 1; filter: brightness(1.4) blur(0); }
+  100% { opacity: 1; filter: none; }
+}
+@keyframes bootPanelIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes bootScanlineSweep {
+  0%   { transform: translateY(-100%); opacity: 0.9; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+#app-window      { animation: bootFlicker 0.7s ease-out; }
+#title-bar       { animation: bootSlideDown 0.45s ease-out 0.35s both; }
+#wardrobe-screen { animation: bootScreenFlash 0.6s ease-out 0.55s both; }
+.filter-bar-mini { animation: bootFadeIn 0.4s ease-out 0.85s both; }
+#step-1 .item-panel:nth-of-type(1) { animation: bootPanelIn 0.5s cubic-bezier(0.2,0.9,0.3,1.2) 0.95s both; }
+#step-1 .item-panel:nth-of-type(2) { animation: bootPanelIn 0.5s cubic-bezier(0.2,0.9,0.3,1.2) 1.15s both; }
+#action-bar      { animation: bootSlideUp 0.5s ease-out 0.7s both; }
+#category-ribbon { animation: bootSlideUp 0.45s ease-out 0.9s both; }
+#status-bar      { animation: bootFadeIn 0.4s ease-out 1.1s both; }
+
+/* CRT scanline sweep — runs once during boot */
+#wardrobe-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255,255,255,0.45) 48%,
+    rgba(255,255,255,0.7) 50%,
+    rgba(255,255,255,0.45) 52%,
+    transparent 100%
+  );
+  animation: bootScanlineSweep 0.9s ease-out 0.55s 1 both;
+  z-index: 40;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #app-window, #title-bar, #wardrobe-screen, .filter-bar-mini,
+  #step-1 .item-panel, #action-bar, #category-ribbon, #status-bar,
+  #wardrobe-screen::after, .dress-me-btn:not(:disabled) {
+    animation: none !important;
+  }
 }
 
 /* ============================================
